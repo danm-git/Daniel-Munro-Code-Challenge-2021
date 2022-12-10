@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script id="src" src="../op_return/routes.js"></script>
+    <title>Welcome to the OP_RETURN Admin Page!</title>
+  </head>
+  <script type="text/javascript">
+    const headers = {
+      "content-type": "text/plain;",
+    };
+
+    const xhttp = new XMLHttpRequest();
+    xhttp.responseType = "text";
+
+    function getLastDate() {
+      xhttp.open("GET", "/opreturn/lastRecordDate", true);
+      xhttp.onload = function () {
+        var jsonResponse = xhttp.response;
+        document.getElementById("lastDate").innerHTML = this.responseText;
+      };
+      xhttp.send();
+    }
+
+    function pauseOpReturn() {
+      xhttp.open("GET", "/opreturn/stopIndex", true);
+      xhttp.onload = function () {
+        var jsonResponse = xhttp.response;
+        document.getElementById("pauseIndexer").innerHTML = this.responseText;
+      };
+      xhttp.send();
+    }
+
+    function startOpReturn() {
+      xhttp.open("GET", "/opreturn/startIndex", true);
+      xhttp.onload = function () {
+        var jsonResponse = xhttp.response;
+        document.getElementById("indexStatus").innerHTML = this.responseText;
+      };
+      xhttp.send();
+    }
+
+    function getIndexStatus() {
+      xhttp.open("GET", "/opreturn/indexStatus", true);
+      xhttp.onload = function () {
+        var jsonResponse = xhttp.response;
+        document.getElementById("indexStatus").innerHTML = this.responseText;
+      };
+      xhttp.send();
+    }
+
+    function getRecordCount() {
+      xhttp.open("GET", "/opreturn/recordCount", true);
+      xhttp.onload = function () {
+        var jsonResponse = xhttp.response;
+        document.getElementById("recordCount").innerHTML = this.responseText;
+      };
+      xhttp.send();
+    }
+
+    function getOpReturn(opId) {
+      xhttp.open("GET", "/opreturn/" + opId, true);
+      xhttp.onload = function () {
+        var jsonResponse = xhttp.response;
+        document.getElementById("opData").innerHTML = this.responseText;
+      };
+      xhttp.send();
+    }
+  </script>
+  <body>
+    <h1>Welcome to the OP_RETURN Admin Page!</h1>
+    <p>
+      This is just a very basic admin page for enabling the Indexer and looking
+      up some info about the DB.
+    </p>
+
+    <div>
+      <div style="width: 100%; padding: 10px; font-weight: bolder">
+        <input
+          id="startButton"
+          type="button"
+          value="START INDEXER"
+          onclick="startOpReturn();"
+        />
+        <input
+          id="pauseButton"
+          type="button"
+          value="PAUSE INDEXER"
+          onclick="pauseOpReturn();"
+        />
+      </div>
+    </div>
+
+    <div style="margin-top: 3%">
+      <div
+        style="width: 100%; display: flex; padding: 5px; font-weight: bolder"
+      >
+        <input
+          id="refreshButton"
+          type="button"
+          value="Seacrh"
+          onclick="getLastDate();"
+          width="10%"
+        />
+        <div style="width: 15%; padding: 5px">The Last Indexed Date:</div>
+        <div style="width: 40%; padding: 5px; color: blue" id="lastDate"></div>
+      </div>
+
+      <div
+        style="width: 100%; display: flex; padding: 5px; font-weight: bolder"
+      >
+        <input
+          id="recordCountButton"
+          type="button"
+          value="Seacrh"
+          onclick="getRecordCount();"
+          width="10%"
+        />
+        <div style="width: 15%; padding: 5px">Current DB Record Count:</div>
+        <div
+          style="width: 40%; padding: 5px; color: blue"
+          id="recordCount"
+        ></div>
+      </div>
+    </div>
+
+    <div style="margin-top: 5%">
+      <h3>Seacrch By OP_RETURN:</h3>
+      <input
+        id="indexStatus"
+        type="button"
+        value="SEARCH"
+        onclick="getOpReturn(document.getElementById('opIdInput').value );"
+      />
+      <input
+        id="opIdInput"
+        type="text"
+        style="width: 700px; padding: 5px"
+        value=""
+      />
+      <pre style="width: 100%; height: 500px; padding: 5px" id="opData"></pre>
+    </div>
+  </body>
+</html>
